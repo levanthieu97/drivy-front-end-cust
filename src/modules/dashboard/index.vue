@@ -118,9 +118,10 @@
                             light
                             color="brown"
                             text-color="white"
-                          >Save
-                            {{ discount(i.alter_price, i.price) }} %</v-chip
                           >
+                            Save
+                            {{ discount(i.alter_price, i.price) }} %
+                          </v-chip>
                         </div>
                       </div>
                     </v-card-actions>
@@ -128,21 +129,21 @@
                 </v-card>
               </v-hover>
             </v-flex>
-            <v-flex class="text-xs-center">
-              <template>
-                <div class="justify-center">
-                  <v-btn
-                    class="text-none"
-                    outline
-                    round
-                    color="pink"
-                    @click="addMoreProduct()"
-                  >Xem Thêm</v-btn
-                  >
-                </div>
-              </template>
-            </v-flex>
           </v-layout>
+        </v-flex>
+        <v-flex class="text-xs-center">
+          <template>
+            <div class="justify-center">
+              <v-btn
+                class="text-none"
+                outline
+                round
+                color="pink"
+                @click="addMoreProduct()"
+              >Xem Thêm</v-btn
+              >
+            </div>
+          </template>
         </v-flex>
       </v-layout>
     </v-container>
@@ -284,8 +285,6 @@ export default {
     async getDataProduct() {
       const { data, success, message } = await this.getInfoProduct();
       this.listProduct = data;
-
-      console.log(this.listProduct);
       _.forEach(this.listProduct, item => {
         const temp = item.product_image;
         if (temp != null) {

@@ -24,7 +24,7 @@
           >
           <span class="caption mr-1">Make With Love</span>
           <v-icon color="pink" small>favorite</v-icon>
-          <span class="caption mr-1">By Thieu Le</span>
+          <span class="caption mr-1">By Thieu Le & Tung Nguyen</span>
         </v-footer>
         <!-- Go to top -->
       </v-app>

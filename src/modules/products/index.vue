@@ -54,9 +54,9 @@
           <v-layout row wrap>
             <v-flex xs12 md12>
               <div>
-                <span style="color:#D50000" class="headline">{{
-                  formatPrice(price)
-                }}</span>
+                <span style="color:#D50000" class="headline">
+                  {{ formatPrice(price) }}
+                </span>
                 <span style="color:#D50000" class="title">đ</span>
               </div>
               <div>
@@ -184,7 +184,7 @@
                   <v-icon color="#1A237E">store</v-icon>
                 </span>
                 <span class="ml-1 teal--text">{{
-                  this.thisSupplier.store_name
+                  thisSupplier.store_name
                 }}</span>
               </div>
               <div>
@@ -194,7 +194,9 @@
                 <span class="ml-1">Hợp tác cùng Drivy</span>
               </div>
               <div class="pl-4 mb-2">
-                <v-btn small dark color="#00695C">Xem Shop</v-btn>
+                <v-btn small dark color="#00695C" @click="viewStore"
+                >Xem Shop</v-btn
+                >
               </div>
               <template v-if="this.supplier.length > 0">
                 <v-divider />
@@ -418,7 +420,6 @@ export default {
     this.getInfoCatalog();
     this.getSupplierProduct();
     this.getInfoCart();
-    console.log(this.response);
   },
 
   methods: {
@@ -448,9 +449,10 @@ export default {
       const { success, message } = await this.addShoppingCart({});
     },
 
+    viewStore() {},
+
     choseSupplier(item) {
       let index = this.supplier.indexOf(item);
-      console.log(item);
       let checkExist = this.supplier.includes(this.thisSupplier);
       if (checkExist === false) {
         this.supplier.push(this.thisSupplier);
@@ -476,12 +478,12 @@ export default {
           const checkProduct = await this.checkInfoProduct({
             orderProduct: this.orderProduct
           });
-          console.log(checkProduct);
-
           if (checkProduct.data === null) {
             this.numberCart++;
             this.showSuccessMsg('Đã thêm sản phẩm vào giỏ hàng !');
             EventBus.$emit('add-clicked', this.numberCart);
+            this.orderProduct.supplier_profile_id = this.thisSupplier.supplier_profile_id;
+            this.orderProduct.store_name = this.thisSupplier.store_name;
             this.orderProduct.product_quantity = this.product_quantity;
             const { data, success, message } = await this.addShoppingCart({
               orderProduct: this.orderProduct
@@ -492,11 +494,9 @@ export default {
 
             this.orderProduct.product_quantity =
               checkProduct.data.product_quantity + this.product_quantity;
-            console.log(this.orderProduct);
             const result = await this.updateQuantityShoppingCart({
               orderProduct: this.orderProduct
             });
-            console.log(result);
           }
         }
       }
@@ -569,8 +569,6 @@ export default {
         const { data, success, message } = await this.getInfoUserCart({
           userId: userId
         });
-
-        console.log(this.response);
         this.orderProduct.order_id = data.order_id;
         const result = await this.countNumberProduct({
           orderId: data.order_id
@@ -596,7 +594,6 @@ export default {
           productName: this.response
         }
       );
-      console.log(data);
       this.currQuantity = data.product_quantity;
       this.orderProduct.product_id = data.product_id;
       this.nameProduct = data.product_name;
