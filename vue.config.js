@@ -7,7 +7,7 @@ function resolve(dir) {
 module.exports = {
   lintOnSave: true,
   publicPath: '/',
-  outputDir: '../src/main/resources/public',
+  outputDir: 'build',
   assetsDir: 'assets',
   runtimeCompiler: undefined,
   productionSourceMap: undefined,
